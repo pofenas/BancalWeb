@@ -13,14 +13,14 @@ class Panel extends BaseController
   protected StatusModel $statusModel;
   protected TodoModel $todoModel;
 
-  public function __construct()
+public function __construct()
     {
       $this->dispositivosModel = new DispositivosModel();
       $this->statusModel = new StatusModel();
       $this->todoModel = new TodoModel();
     }
 
-  public function index(): string
+public function index(): string
   {
     $dispositivos = $this->dispositivosModel
       ->orderBy('alias', 'ASC')
@@ -67,7 +67,7 @@ class Panel extends BaseController
     ]);
   }
 
-  public function todo(string $alias): ResponseInterface
+public function todo(string $alias): ResponseInterface
     {
       $rows = $this->todoModel
         ->where('alias', $alias)
@@ -148,7 +148,7 @@ class Panel extends BaseController
       return $this->response->setJSON($riegos);
     }
 
-  public function create(): ResponseInterface
+public function create(): ResponseInterface
   {
     $data = $this->request->getJSON(true);
 
@@ -302,7 +302,7 @@ class Panel extends BaseController
     ]);
   }
 
-  public function delete(int $onId, int $offId): ResponseInterface
+public function delete(int $onId, int $offId): ResponseInterface
     {
       $db = \Config\Database::connect();
 
@@ -328,50 +328,50 @@ class Panel extends BaseController
       ]);
     }
 
-  protected function inicioSolapado(
-    string $alias,
-    int $canal,
-    int $dow,
-    int $inicioNuevo,
-    object $db
-  ): bool
-  {
-    $rows = $this->todoModel
-      ->where('alias', $alias)
-      ->where('canal', $canal)
-      ->where('dow', $dow)
-      ->orderBy('hora', 'ASC')
-      ->orderBy('minuto', 'ASC')
-      ->findAll();
-
-    $inicioExistente = null;
-
-    foreach ($rows as $row)
+protected function inicioSolapado(
+      string $alias,
+      int $canal,
+      int $dow,
+      int $inicioNuevo,
+      object $db
+    ): bool
     {
-      $minutos = ((int) $row['hora'] * 60) + (int) $row['minuto'];
+      $rows = $this->todoModel
+        ->where('alias', $alias)
+        ->where('canal', $canal)
+        ->where('dow', $dow)
+        ->orderBy('hora', 'ASC')
+        ->orderBy('minuto', 'ASC')
+        ->findAll();
 
-      if ($row['turn'] === 'ON')
-      {
-        $inicioExistente = $minutos;
-      }
-      elseif ($row['turn'] === 'OFF' && $inicioExistente !== null)
-      {
-        $finExistente = $minutos;
+      $inicioExistente = null;
 
-        if (
-          $inicioExistente <= $inicioNuevo
-          && $inicioNuevo < $finExistente
-        )
+      foreach ($rows as $row)
+      {
+        $minutos = ((int) $row['hora'] * 60) + (int) $row['minuto'];
+
+        if ($row['turn'] === 'ON')
         {
-          return true;
+          $inicioExistente = $minutos;
         }
+        elseif ($row['turn'] === 'OFF' && $inicioExistente !== null)
+        {
+          $finExistente = $minutos;
 
-        $inicioExistente = null;
+          if (
+            $inicioExistente <= $inicioNuevo
+            && $inicioNuevo < $finExistente
+          )
+          {
+            return true;
+          }
+
+          $inicioExistente = null;
+        }
       }
-    }
 
-    return false;
-  }
+      return false;
+    }
 
 protected function errorResponse(
       string $message,
