@@ -1,0 +1,14 @@
+CRITICAL - 2026-09-06 12:24:54 --> ErrorException: Undefined variable $status
+[Method: GET, Route: /]
+in APPPATH/Views/panel.php on line 210.
+ 1 APPPATH/Views/panel.php(210): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/View/View.php(240): include('/var/www/html/bancal/app/Views/panel.php')
+ 3 SYSTEMPATH/View/View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1254): CodeIgniter\View\View->render()
+ 5 APPPATH/Controllers/Panel.php(61): view()
+ 6 SYSTEMPATH/CodeIgniter.php(974): App\Controllers\Panel->index()
+ 7 SYSTEMPATH/CodeIgniter.php(520): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(363): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()

@@ -1,0 +1,9 @@
+CRITICAL - 2026-06-13 09:16:39 --> TypeError: App\Controllers\Api::test(): Return value must be of type CodeIgniter\HTTP\ResponseInterface, none returned
+[Method: GET, Route: api/test]
+in APPPATH/Controllers/Api.php on line 32.
+ 1 SYSTEMPATH/CodeIgniter.php(974): App\Controllers\Api->test()
+ 2 SYSTEMPATH/CodeIgniter.php(520): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(363): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
